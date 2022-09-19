@@ -14,7 +14,7 @@ resource "aws_guardduty_detector" "guardduty" {
         }
       }
     }
-    
+
     kubernetes {
       audit_logs {
         enable = var.is_kubernetes_protection_enabled
@@ -23,13 +23,14 @@ resource "aws_guardduty_detector" "guardduty" {
 
 
   }
-  
+
 
   tags = local.tags
 }
 
 module "sns_email" {
-  source = "git@github.com:oozou/terraform-aws-sns.git?ref=v1.0.1"
+  source  = "oozou/sns/aws"
+  version = "1.0.1"
 
   prefix       = var.prefix
   environment  = var.environment
@@ -37,8 +38,8 @@ module "sns_email" {
   display_name = format("%s-GuardDuty", var.name)
 
   # KMS
-  is_enable_encryption = true
-  is_create_kms        = true
+  is_enable_encryption        = true
+  is_create_kms               = true
   additional_kms_key_policies = [data.aws_iam_policy_document.cwe.json]
 
   subscription_configurations = {
@@ -59,7 +60,8 @@ module "sns_email" {
 
 
 module "eventbridge_mail" {
-  source = "git@github.com:oozou/terraform-aws-eventbridge.git?ref=v1.0.1"
+  source  = "oozou/eventbridge/aws"
+  version = "1.0.1"
 
   prefix            = var.prefix
   environment       = var.environment
@@ -70,10 +72,10 @@ module "eventbridge_mail" {
   cloudwatch_event_rule_is_enabled = var.is_enabled_notification.email_notify.enable
 
   input_transformer = local.input_transformer
-  event_pattern = local.event_pattern
+  event_pattern     = local.event_pattern
 
   cloudwatch_event_target_arn = module.sns_email.sns_topic_arn
-  retry_policy = var.retry_policy
+  retry_policy                = var.retry_policy
 
   tags = local.tags
 }

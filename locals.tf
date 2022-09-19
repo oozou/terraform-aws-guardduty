@@ -1,11 +1,11 @@
 locals {
-    tags = merge(
+  tags = merge(
     {
       "Environment" = var.environment,
       "Terraform"   = "true"
     },
     var.custom_tags
-  )  
+  )
 }
 
 /* -------------------------------------------------------------------------- */
@@ -57,12 +57,12 @@ locals {
   input_transformer = {
     input_paths = {
       severity     = "$.detail.severity",
-      Finding_ID = "$.detail.id",
+      Finding_ID   = "$.detail.id",
       Finding_Type = "$.detail.type",
-      count = "$.detail.service.count",
-      region = "$.region"
+      count        = "$.detail.service.count",
+      region       = "$.region"
     }
-    input_template ="\"You have a severity <severity> GuardDuty finding type <Finding_Type>. The total occurrence is <count>. For more details open the GuardDuty console at https://console.aws.amazon.com/guardduty/home?region=<region>#/findings?search=id%3D<Finding_ID>\""
+    input_template = "\"You have a severity <severity> GuardDuty finding type <Finding_Type>. The total occurrence is <count>. For more details open the GuardDuty console at https://console.aws.amazon.com/guardduty/home?region=<region>#/findings?search=id%3D<Finding_ID>\""
   }
 }
 

@@ -52,14 +52,14 @@ variable "is_s3_protection_enabled" {
 
 variable "is_malware_protection_enabled" {
   description = ""
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 
 variable "is_kubernetes_protection_enabled" {
   description = ""
-  type = bool
-  default = true
+  type        = bool
+  default     = true
 }
 
 /* -------------------------------------------------------------------------- */
