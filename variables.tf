@@ -51,13 +51,17 @@ variable "is_s3_protection_enabled" {
 }
 
 variable "is_malware_protection_enabled" {
-  description = ""
+  description = "Configures Malware Protection, See more at https://docs.aws.amazon.com/guardduty/latest/ug/malware-protection.html"
   type        = bool
   default     = false
 }
 
 variable "is_kubernetes_protection_enabled" {
-  description = ""
+  description = <<-DOC
+  Configures Kubernetes audit logs as a data source for Kubernetes protection.
+  , see:
+  https://docs.aws.amazon.com/guardduty/latest/ug/kubernetes-protection.html
+  DOC
   type        = bool
   default     = true
 }
