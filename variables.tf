@@ -47,7 +47,7 @@ variable "is_s3_protection_enabled" {
   https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/guardduty_detector
   DOC
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "is_malware_protection_enabled" {
